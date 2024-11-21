@@ -9,7 +9,7 @@ from PySide2.QtGui import (QFont, QColor)
 from PySide2.QtWidgets import (QApplication,QMainWindow,QTableView,QAbstractItemView,QHBoxLayout,QGridLayout,QScrollBar,QPushButton,QWidget)
 
 
-filename = r"C:\Users\arumyantsyev\Downloads\ТестТаблицы\32M_RND.bin"
+filename = r".\32M_RND.bin"
 
 def convert_to(number, base, length=2,  upper=True):
     digits = '0123456789abcdef'
