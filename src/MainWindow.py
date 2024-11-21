@@ -1,3 +1,4 @@
+import logging
 import sys
 
 from PySide2.QtCore import QModelIndex
@@ -19,15 +20,20 @@ class MainWindow(QMainWindow):
         table.setFont(font)
         table.horizontalHeader().setFont(font)
         table.verticalHeader().setFont(font)
-        model = FileTableModel(filename)
+        model = FileTableModel(filename, 32)
         table.setModel(model)
+        table.horizontalHeader().setStretchLastSection(True)
 
         for column in range(model.columnCount(QModelIndex())):
-            table.setColumnWidth(column, 20)
+            if column != model.text_column_idx:
+                table.setColumnWidth(column, 20)
 
         self.setCentralWidget(table)
 
 if __name__ == "__main__":
+    logging.basicConfig(format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                        datefmt='%H:%M:%S',
+                        level=logging.DEBUG)
     # Qt Application
     app = QApplication(sys.argv)
     # QMainWindow using QWidget as central widget
