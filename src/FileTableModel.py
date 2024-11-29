@@ -4,12 +4,11 @@ from PySide2.QtCore import QAbstractTableModel, Qt
 class FileTableModel(QAbstractTableModel):
     byte_in_row = 16
 
-    def __init__(self, filename, bytes_is_row):
+    def __init__(self, data, bytes_is_row):
         super().__init__()
-        file = open(filename, "rb")
         self.byte_in_row = bytes_is_row
         self.text_column_idx = bytes_is_row
-        self._data = bytearray(file.read())
+        self._data = bytearray(data)
         self.row_count = int(len(self._data) / self.byte_in_row)
 
     def rowCount(self, index):
@@ -38,7 +37,7 @@ class FileTableModel(QAbstractTableModel):
         if role == Qt.DisplayRole and orientation == Qt.Horizontal and section == self.text_column_idx:
             return "Текст"
         elif role == Qt.DisplayRole and orientation == Qt.Vertical:
-            return self.hex(section).zfill(len(self.hex(self.row_count)))
+            return self.hex(section*self.byte_in_row).zfill(len(self.hex(self.row_count*self.byte_in_row)))
         elif role == Qt.DisplayRole:
             return self.hex(section)
 
