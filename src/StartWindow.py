@@ -1,15 +1,16 @@
-import logging
 import sys
 
-from PySide2.QtCore import QModelIndex, Qt, Slot, QSize, QTimer, QEvent
-from PySide2.QtGui import QFont, QColor, QIcon
-from PySide2.QtWidgets import QLabel, QPushButton, QSpinBox, QComboBox, QCheckBox, QRadioButton, QTabWidget, QScrollBar,QProgressBar, QMainWindow, QTableView, QApplication, QMenu, QMessageBox, QWidget, QSizePolicy, QHBoxLayout, QVBoxLayout, QGridLayout, QGroupBox, QStatusBar
+from PySide2.QtCore import QModelIndex, QTimer
+from PySide2.QtGui import QColor, QFont
+from PySide2.QtWidgets import QWidget, QSizePolicy, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QPushButton, QSpinBox, \
+    QTableView, QGroupBox, QCheckBox, QRadioButton, QGridLayout, QTabWidget, QStatusBar, QProgressBar
 
-from src.FileTableModel import FileTableModel
-from src.MemoryTableModel import MemoryTableModel
-from src.ErrorsTableModel import ErrorsTableModel
 from src.ContactTableModel import ContactTableModel
+from src.ErrorsTableModel import ErrorsTableModel
+from src.FileTableModel import FileTableModel
 from src.HistoryTableModel import HistoryTableModel
+from src.MemoryTableModel import MemoryTableModel
+
 
 class StartWindow(QWidget):
     def __init__(self):
@@ -56,7 +57,7 @@ class StartWindow(QWidget):
         self.IC_layout.addWidget(self.IC_lable)
         self.IC_layout.addWidget(self.IC_combobox)
         #--------------------------------Микросхема-----------------------------
-        
+
         #--------------------------------Режимы---------------------------------
         self.commands_lable = QLabel("Режим:")
         self.commands_lable.setSizePolicy(labelSizePolicy_l)
@@ -78,12 +79,12 @@ class StartWindow(QWidget):
         self.commands_vertical_layout.addLayout(self.commands_layout)
         self.commands_vertical_layout.addStretch(1)
         #--------------------------------COM-потр+Микросхема+Режимы-------------
-    
+
         #--------------------------------Подключение+запуск---------------------
-        self.connect_pushbutton = QPushButton("Подключить программатор") 
+        self.connect_pushbutton = QPushButton("Подключить программатор")
         self.connect_pushbutton.setToolTip("Подключение/отключение программатора")
         #self.programmer_connect_pushbutton.clicked.connect(self.programmerConnection)
-        self.action_pushbutton = QPushButton("Запуск") 
+        self.action_pushbutton = QPushButton("Запуск")
         self.action_pushbutton.setEnabled(False)
         self.action_pushbutton.setToolTip("Кнопка запуска или прерывания для выбранного режима работы")
         #self.programmer_action_pushbutton.clicked.connect(self.programmerAction)
@@ -128,7 +129,7 @@ class StartWindow(QWidget):
         self.action_vertical_layout.addLayout(self.page_count_layout)
         self.action_vertical_layout.addStretch(1)
         #--------------------------------Адрес+Страницы-------------------------
-        
+
         #--------------------------------Подключение+запуск+Адрес+Страницы------
         self.settings_layout = QHBoxLayout()
         self.settings_layout.addLayout(self.commands_vertical_layout)
@@ -178,7 +179,7 @@ class StartWindow(QWidget):
         self.dataFromErrorsViewerWidget.setModel(model)
         self.dataFromErrorsViewerWidget.horizontalHeader().setStretchLastSection(True)
         #--------------------------------Список ошибок--------------------------
-        
+
         #--------------------------------Статус контактирования-----------------
         self.dataFromContactViewerWidget = QTableView(self)
         self.dataFromContactViewerWidget.setFont(font)
@@ -237,7 +238,7 @@ class StartWindow(QWidget):
         self.dataFromMemoryLoad = QPushButton("Загрузить дамп в буфер программы")
         self.dataFromMemoryLoad.setToolTip("Загрузить данные из файла в буфер программы, данные будут восприняты как прочитанные из памяти")
         #self.dataFromMemoryLoad.clicked.connect(self.loadDumpFile)
-        
+
         self.dataFromMemoryViewerSettingsVerticalalLayout = QVBoxLayout(self.dataFromMemoryViewerSettingsGroupBox)
         self.dataFromMemoryViewerSettingsVerticalalLayout.addWidget(self.dataFromMemorySave)
         self.dataFromMemoryViewerSettingsVerticalalLayout.addWidget(self.dataFromMemoryLoad)
@@ -326,7 +327,7 @@ class StartWindow(QWidget):
         #self.progressBar.setValue(50)
         self.status_bar.addPermanentWidget(self.progressBar)
         #--------------------------------Статус и прогресс------------------------
-        
+
         #--------------------------------Финальная сборка-------------------------
         self.layout = QVBoxLayout(self)
         self.layout.addLayout(self.settings_layout)
@@ -335,95 +336,3 @@ class StartWindow(QWidget):
         #--------------------------------Финальная сборка-------------------------
 
         self.statusBarTimer = QTimer(self)
-
-
-
-class MainWindow(QMainWindow):
-
-    def __init__(self,main_widget):
-        super().__init__()
-        self.setWindowTitle("Тест таблицы")
-        self.setWindowIcon(QIcon('./img/niime.png'))
-
-        #--------------------------------Меню главного окна-----------------------
-        self.menu = self.menuBar()
-        #--------------------------------Файл-------------------------------------
-        self.file_menu = self.menu.addMenu("Файл")
-        #--------------------------------Открыть файл-----------------------------
-        select_file_dialog = self.file_menu.addAction("Открыть файл")
-        #select_file_dialog.triggered.connect(main_widget.openFile)
-        select_file_dialog.setShortcut("Ctrl+A")
-        #--------------------------------Обновление прошивки----------------------
-        update_firmware_action = self.file_menu.addAction("Обновить прошивку")
-        #update_firmware_action.triggered.connect(main_widget.update_firmware)
-        update_firmware_action.setShortcut("Ctrl+U")
-        #--------------------------------Обновление прошивки----------------------
-        #--------------------------------Выход------------------------------------
-        exit_action = self.file_menu.addAction("Выход", self.close_application)
-        exit_action.setShortcut("Ctrl+Q")
-        #--------------------------------Обновление прошивки----------------------
-        #--------------------------------Файл-------------------------------------
-
-        #--------------------------------Справка----------------------------------
-        self.help_menu = self.menu.addMenu("Справка")
-        #--------------------------------О программе------------------------------
-        about_action = self.help_menu.addAction("О программе")
-        #about_action.triggered.connect(main_widget.aboutProgrammer)
-        about_action.setShortcut("F1")
-        #--------------------------------О программе------------------------------
-        #--------------------------------О прошивке-------------------------------
-        about_firmware_action = self.help_menu.addAction("О прошивке")
-        #about_firmware_action.triggered.connect(main_widget.aboutFirmware)
-        about_firmware_action.setShortcut("F2")
-        #--------------------------------О прошивке-------------------------------
-        #--------------------------------Обратная связь---------------------------
-        callback_action = self.help_menu.addAction("Связь с разработчиком")
-        #callback_action.triggered.connect(main_widget.email_callback)
-        #--------------------------------Обратная связь---------------------------
-        #--------------------------------Справка----------------------------------
-
-        #--------------------------------Контекстное меню на вкладке данных из файла
-        self.fileContextMenu = QMenu(self)
-        self.fileContextMenu.addAction("Открыть файл")
-        #--------------------------------Контекстное меню на вкладке данных из файла
-
-        #--------------------------------Контекстное меню на вкладке данных из микросхемы
-        self.memoryContextMenu = QMenu(self)
-        self.memoryContextMenu.addAction("Открыть файл")
-        self.memoryContextMenu.addAction("Загрузить дамп в буфер программы")
-        #--------------------------------Контекстное меню на вкладке данных из микросхемы
-
-        #--------------------------------Контекстное меню на вкладке истории действий
-        self.historyContextMenu = QMenu(self)
-        self.historyContextMenu.addAction("Очистить историю")
-        self.historyContextMenu.addAction("Повторить действие")
-        #--------------------------------Контекстное меню на вкладке истории действий
-
-        self.setCentralWidget(main_widget)
-
-    def close_application(self):
-        msg = QMessageBox(self)
-        msg.setWindowTitle("Выход")
-        msg.setIcon(QMessageBox.Question)
-        msg.setText("Вы действительно хотите выйти?")
-        buttonAceptar  = msg.addButton("Да", QMessageBox.YesRole)    
-        buttonCancelar = msg.addButton("Отменить", QMessageBox.RejectRole) 
-        msg.setDefaultButton(buttonCancelar)
-        msg.exec_()        
-        if(msg.clickedButton() == buttonAceptar):
-            self.close()
-        else:
-            pass
-
-if __name__ == "__main__":
-    logging.basicConfig(format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                        datefmt='%H:%M:%S',
-                        level=logging.DEBUG)
-    # Qt Application
-    app = QApplication(sys.argv)
-    main_widget = StartWindow()
-    # QMainWindow using QWidget as central widget
-    window = MainWindow(main_widget)
-    window.setMinimumSize(800, 600)
-    window.show()
-    sys.exit(app.exec_())
