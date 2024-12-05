@@ -18,8 +18,8 @@ class StartWindow(QWidget):
         self.main_path = '/'.join(sys.executable.replace('\\', '/').split('/')[:-1])#Определяем место положение фала .exe
 
         self.color_ok = QColor(0,255,0,255)     #Green
-        self.ccolor_fail = QColor(255,0,0,255)   #Red
-        self.column_count = 16  #количество столбцов на экране отображения данных
+        self.color_fail = QColor(255, 0, 0, 255)   #Red
+        self.column_count = 16  #Количество столбцов на экране отображения данных
         self.textCoding = ['cp1251','utf-8','ascii']#Варианты кодировок отображения текстовой информации
         comboBoxSizePolicy_h = QSizePolicy(QSizePolicy.Policy.Ignored,QSizePolicy.Policy.Minimum,QSizePolicy.ControlType.ComboBox)
         comboBoxSizePolicy_h.setHorizontalStretch(85)
@@ -28,23 +28,23 @@ class StartWindow(QWidget):
         pushButtonSizePolicy_l = QSizePolicy(QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Minimum,QSizePolicy.ControlType.PushButton)
         pushButtonSizePolicy_l.setHorizontalStretch(0)
 
-        #--------------------------------COM-потр-------------------------------
-        self.com_ports_lable = QLabel("Порт:")
-        self.com_ports_lable.setSizePolicy(labelSizePolicy_l)
+        #--------------------------------COM-порт-------------------------------
+        self.com_ports_label = QLabel("Порт:")
+        self.com_ports_label.setSizePolicy(labelSizePolicy_l)
         self.com_ports_combobox = QComboBox()
         self.com_ports_combobox.setSizePolicy(comboBoxSizePolicy_h)
         #self.programmer_com_ports_combobox.addItems(self.programmer.MC_name)
         self.com_ports_combobox.setDisabled(True)
-        self.com_ports_combobox.setToolTip("Выберети COM-порт для подключения к программатору")
+        self.com_ports_combobox.setToolTip("Выберете COM-порт для подключения к программатору")
 
         self.com_ports_layout = QHBoxLayout()
-        self.com_ports_layout.addWidget(self.com_ports_lable)
+        self.com_ports_layout.addWidget(self.com_ports_label)
         self.com_ports_layout.addWidget(self.com_ports_combobox)
-        #--------------------------------COM-потр-------------------------------
+        #--------------------------------COM-порт-------------------------------
 
         #--------------------------------Микросхема-----------------------------
-        self.IC_lable = QLabel("ИМС:")
-        self.IC_lable.setSizePolicy(labelSizePolicy_l)
+        self.IC_label = QLabel("ИМС:")
+        self.IC_label.setSizePolicy(labelSizePolicy_l)
         self.IC_combobox = QComboBox()
         self.IC_combobox.setSizePolicy(comboBoxSizePolicy_h)
         #self.programmer_IC_combobox.addItems(self.programmer.supported_IC_names)
@@ -54,31 +54,31 @@ class StartWindow(QWidget):
         #self.programmer_IC_combobox.textActivated.connect(self.selectIC)
 
         self.IC_layout = QHBoxLayout()
-        self.IC_layout.addWidget(self.IC_lable)
+        self.IC_layout.addWidget(self.IC_label)
         self.IC_layout.addWidget(self.IC_combobox)
         #--------------------------------Микросхема-----------------------------
 
         #--------------------------------Режимы---------------------------------
-        self.commands_lable = QLabel("Режим:")
-        self.commands_lable.setSizePolicy(labelSizePolicy_l)
+        self.commands_label = QLabel("Режим:")
+        self.commands_label.setSizePolicy(labelSizePolicy_l)
         self.commands_combobox = QComboBox()
         #self.programmer_commands_combobox.textActivated.connect(self.selectMode)
         self.commands_combobox.setSizePolicy(comboBoxSizePolicy_h)
         #self.programmer_commands_combobox.addItems(self.programmer.supported_commands_name)
         self.commands_combobox.setDisabled(True)
-        self.commands_combobox.setToolTip("Выбор поддерживаемого микросхемой режама работы")
+        self.commands_combobox.setToolTip("Выбор поддерживаемого микросхемой режима работы")
         self.commands_layout = QHBoxLayout()
-        self.commands_layout.addWidget(self.commands_lable)
+        self.commands_layout.addWidget(self.commands_label)
         self.commands_layout.addWidget(self.commands_combobox)
         #--------------------------------Режимы---------------------------------
 
-        #--------------------------------COM-потр+Микросхема+Режимы-------------
+        #--------------------------------COM-порт+Микросхема+Режимы-------------
         self.commands_vertical_layout = QVBoxLayout()
         self.commands_vertical_layout.addLayout(self.com_ports_layout)
         self.commands_vertical_layout.addLayout(self.IC_layout)
         self.commands_vertical_layout.addLayout(self.commands_layout)
         self.commands_vertical_layout.addStretch(1)
-        #--------------------------------COM-потр+Микросхема+Режимы-------------
+        #--------------------------------COM-порт+Микросхема+Режимы-------------
 
         #--------------------------------Подключение+запуск---------------------
         self.connect_pushbutton = QPushButton("Подключить программатор")
@@ -89,28 +89,28 @@ class StartWindow(QWidget):
         self.action_pushbutton.setToolTip("Кнопка запуска или прерывания для выбранного режима работы")
         #self.programmer_action_pushbutton.clicked.connect(self.programmerAction)
 
-        self.connetc_action_layout = QHBoxLayout()
-        self.connetc_action_layout.addWidget(self.connect_pushbutton)
-        self.connetc_action_layout.addWidget( self.action_pushbutton)
+        self.connect_action_layout = QHBoxLayout()
+        self.connect_action_layout.addWidget(self.connect_pushbutton)
+        self.connect_action_layout.addWidget( self.action_pushbutton)
         #--------------------------------Подключение+запуск---------------------
 
         #--------------------------------Адрес----------------------------------
-        self.adress_lable = QLabel("Адрес в микросхеме:")
-        self.adress_spin_box = QSpinBox()
-        self.adress_spin_box.setPrefix("0x")
-        self.adress_spin_box.setDisplayIntegerBase(16)
-        self.adress_spin_box.setRange(0x0,0x3FFFFF)
-        self.adress_spin_box.setSingleStep(128)
-        self.adress_spin_box.setValue(0)
-        self.adress_spin_box.setToolTip("Смещение в адресном пространстве микросхемы памяти")
+        self.address_label = QLabel("Адрес в микросхеме:")
+        self.address_spin_box = QSpinBox()
+        self.address_spin_box.setPrefix("0x")
+        self.address_spin_box.setDisplayIntegerBase(16)
+        self.address_spin_box.setRange(0x0, 0x3FFFFF)
+        self.address_spin_box.setSingleStep(128)
+        self.address_spin_box.setValue(0)
+        self.address_spin_box.setToolTip("Смещение в адресном пространстве микросхемы памяти")
 
-        self.adress_layout = QHBoxLayout()
-        self.adress_layout.addWidget(self.adress_lable)
-        self.adress_layout.addWidget(self.adress_spin_box)
+        self.address_layout = QHBoxLayout()
+        self.address_layout.addWidget(self.address_label)
+        self.address_layout.addWidget(self.address_spin_box)
         #--------------------------------Адрес----------------------------------
 
         #--------------------------------Страницы-------------------------------
-        self.page_count_lable = QLabel("Количество страниц:")
+        self.page_count_label = QLabel("Количество страниц:")
         self.page_count_spin_box = QSpinBox()
         self.page_count_spin_box.setRange(1,32768)#Максимум на 32Мбит
         self.page_count_spin_box.setSingleStep(1)
@@ -118,14 +118,14 @@ class StartWindow(QWidget):
         self.page_count_spin_box.setToolTip("Количество страниц микросхемы памяти, которые будут изменены")
 
         self.page_count_layout = QHBoxLayout()
-        self.page_count_layout.addWidget(self.page_count_lable)
+        self.page_count_layout.addWidget(self.page_count_label)
         self.page_count_layout.addWidget(self.page_count_spin_box)
         #--------------------------------Страницы-------------------------------
 
         #--------------------------------Адрес+Страницы-------------------------
         self.action_vertical_layout = QVBoxLayout()
-        self.action_vertical_layout.addLayout(self.connetc_action_layout)
-        self.action_vertical_layout.addLayout(self.adress_layout)
+        self.action_vertical_layout.addLayout(self.connect_action_layout)
+        self.action_vertical_layout.addLayout(self.address_layout)
         self.action_vertical_layout.addLayout(self.page_count_layout)
         self.action_vertical_layout.addStretch(1)
         #--------------------------------Адрес+Страницы-------------------------
@@ -204,16 +204,16 @@ class StartWindow(QWidget):
 
         #--------------------------------Настройки отображения данных------------
         self.dataFromFileViewerSettingsGroupBox = QGroupBox("Настройки отображения данных из файла")
-        self.dataViewerSettingsLable = QLabel("Количество столбцов:")
-        #self.dataViewerSettingsLable.setSizePolicy(labelSizePolicy_l)
+        self.dataViewerSettingsLabel = QLabel("Количество столбцов:")
+        #self.dataViewerSettingsLabel.setSizePolicy(labelSizePolicy_l)
         self.dataViewerSettingSpinBox = QSpinBox()
         self.dataViewerSettingSpinBox.setValue(self.column_count)
         self.dataViewerSettingSpinBox.setRange(1,128)
         self.dataViewerSettingSpinBox.setSingleStep(1)
-        self.dataViewerSettinHBoxLayout = QHBoxLayout()
-        self.dataViewerSettinHBoxLayout.addWidget(self.dataViewerSettingsLable)
-        self.dataViewerSettinHBoxLayout.addWidget(self.dataViewerSettingSpinBox)
-        self.dataViewerSettinHBoxLayout.addStretch(1)
+        self.dataViewerSettingHBoxLayout = QHBoxLayout()
+        self.dataViewerSettingHBoxLayout.addWidget(self.dataViewerSettingsLabel)
+        self.dataViewerSettingHBoxLayout.addWidget(self.dataViewerSettingSpinBox)
+        self.dataViewerSettingHBoxLayout.addStretch(1)
         self.dataViewerSettingCheckBox = QCheckBox("Отображать текстовое представление")
         self.dataViewerSettingCheckBox.setChecked(True)
         self.dataFromFileViewerSettingHex = QRadioButton("Отображение в hex формате")
@@ -223,11 +223,11 @@ class StartWindow(QWidget):
         self.dataFromFileViewerSettingBin.setToolTip("Отображение данных в формате bin")
         #self.dataFromFileViewerSettingHex.toggled.connect(self.viewerSettingsEvent)
 
-        self.dataFromFileViewerSettingsVerticalalLayout = QVBoxLayout(self.dataFromFileViewerSettingsGroupBox)
-        self.dataFromFileViewerSettingsVerticalalLayout.addLayout(self.dataViewerSettinHBoxLayout)
-        self.dataFromFileViewerSettingsVerticalalLayout.addWidget(self.dataFromFileViewerSettingHex)
-        self.dataFromFileViewerSettingsVerticalalLayout.addWidget(self.dataFromFileViewerSettingBin)
-        self.dataFromFileViewerSettingsVerticalalLayout.addStretch(1)
+        self.dataFromFileViewerSettingsVerticalLayout = QVBoxLayout(self.dataFromFileViewerSettingsGroupBox)
+        self.dataFromFileViewerSettingsVerticalLayout.addLayout(self.dataViewerSettingHBoxLayout)
+        self.dataFromFileViewerSettingsVerticalLayout.addWidget(self.dataFromFileViewerSettingHex)
+        self.dataFromFileViewerSettingsVerticalLayout.addWidget(self.dataFromFileViewerSettingBin)
+        self.dataFromFileViewerSettingsVerticalLayout.addStretch(1)
         #--------------------------------Настройки отображения данных-------------
 
         #--------------------------------Настройки данных микросхемы--------------
@@ -239,10 +239,10 @@ class StartWindow(QWidget):
         self.dataFromMemoryLoad.setToolTip("Загрузить данные из файла в буфер программы, данные будут восприняты как прочитанные из памяти")
         #self.dataFromMemoryLoad.clicked.connect(self.loadDumpFile)
 
-        self.dataFromMemoryViewerSettingsVerticalalLayout = QVBoxLayout(self.dataFromMemoryViewerSettingsGroupBox)
-        self.dataFromMemoryViewerSettingsVerticalalLayout.addWidget(self.dataFromMemorySave)
-        self.dataFromMemoryViewerSettingsVerticalalLayout.addWidget(self.dataFromMemoryLoad)
-        self.dataFromMemoryViewerSettingsVerticalalLayout.addStretch(1)
+        self.dataFromMemoryViewerSettingsVerticalLayout = QVBoxLayout(self.dataFromMemoryViewerSettingsGroupBox)
+        self.dataFromMemoryViewerSettingsVerticalLayout.addWidget(self.dataFromMemorySave)
+        self.dataFromMemoryViewerSettingsVerticalLayout.addWidget(self.dataFromMemoryLoad)
+        self.dataFromMemoryViewerSettingsVerticalLayout.addStretch(1)
         #--------------------------------Настройки данных микросхемы-------------
 
         #--------------------------------Настройки отображения ошибок------------
@@ -259,11 +259,11 @@ class StartWindow(QWidget):
         self.dataFromErrorsSave.setToolTip("Сохранение ошибок в файл")
         #self.dataFromErrorsSave.clicked.connect(self.saveErrorFile)
 
-        self.dataFromErrorsViewerSettingsVerticalalLayout = QVBoxLayout(self.dataFromErrorsViewerSettingsGroupBox)
-        self.dataFromErrorsViewerSettingsVerticalalLayout.addWidget(self.dataFromErrorsViewerSettingFirst)
-        self.dataFromErrorsViewerSettingsVerticalalLayout.addWidget(self.dataFromErrorsViewerSettingAll)
-        self.dataFromErrorsViewerSettingsVerticalalLayout.addWidget(self.dataFromErrorsSave)
-        #self.dataFromErrorsViewerSettingsVerticalalLayout.addStretch(1)
+        self.dataFromErrorsViewerSettingsVerticalLayout = QVBoxLayout(self.dataFromErrorsViewerSettingsGroupBox)
+        self.dataFromErrorsViewerSettingsVerticalLayout.addWidget(self.dataFromErrorsViewerSettingFirst)
+        self.dataFromErrorsViewerSettingsVerticalLayout.addWidget(self.dataFromErrorsViewerSettingAll)
+        self.dataFromErrorsViewerSettingsVerticalLayout.addWidget(self.dataFromErrorsSave)
+        #self.dataFromErrorsViewerSettingsVerticalLayout.addStretch(1)
         #--------------------------------Настройки отображения ошибок------------
 
         #--------------------------------Настройки режимов работы----------------
@@ -287,12 +287,12 @@ class StartWindow(QWidget):
         self.textCoding_combobox_layout.addWidget(self.textCoding_combobox)
         self.textCoding_combobox_layout.addStretch(1)
 
-        self.allSettingsVerticalalLayout = QVBoxLayout(self.allSettingsGroupBox)
-        self.allSettingsVerticalalLayout.addWidget(self.autoSettingsCheckBox)
-        self.allSettingsVerticalalLayout.addWidget(self.contactSettingsCheckBox)
-        self.allSettingsVerticalalLayout.addWidget(self.fileLogsCheckBox)
-        self.allSettingsVerticalalLayout.addLayout(self.textCoding_combobox_layout)
-        self.allSettingsVerticalalLayout.addStretch(1)
+        self.allSettingsVerticalLayout = QVBoxLayout(self.allSettingsGroupBox)
+        self.allSettingsVerticalLayout.addWidget(self.autoSettingsCheckBox)
+        self.allSettingsVerticalLayout.addWidget(self.contactSettingsCheckBox)
+        self.allSettingsVerticalLayout.addWidget(self.fileLogsCheckBox)
+        self.allSettingsVerticalLayout.addLayout(self.textCoding_combobox_layout)
+        self.allSettingsVerticalLayout.addStretch(1)
         #--------------------------------Настройки режимов работы----------------
 
         #--------------------------------Все настройки отображения---------------
